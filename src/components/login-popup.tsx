@@ -1,5 +1,5 @@
 "use client";
-import { signInGithub, signInGoogle } from "@/Actions/actions";
+import { signInGithub, signInGoogle } from "@/actions/actions";
 import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {

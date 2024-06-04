@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import Navbar from "@/components/Navbar";
-import { ModeToggle } from "@/components/ui/ToggleTheme";
-import Image from "next/image";
+
 import { redirect } from "next/navigation";
 
 export default async function Home() {

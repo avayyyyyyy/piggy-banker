@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -9,46 +10,71 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { saveCurrency } from "@/Actions/actions";
+import { saveCurrency } from "@/actions/actions";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { Currencies } from "@/lib/currencies";
+import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 
 function CurrencyForm() {
   const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const handleSave = () => {
-    const isSaved = saveCurrency(selectedCurrency).then((e) => {
-      if (e.status === "ok") {
-        toast.success("Currency Updated Successfully!");
-        router.push("/dashboard");
-      }
-    });
-  };
+
+  const saveCurrencyFnc = useMutation({
+    mutationKey: ["saveCurrency"],
+    mutationFn: async () => {
+      setLoading(true);
+      await saveCurrency(selectedCurrency);
+    },
+    onSuccess: () => {
+      toast.success("Currency Updated Successfully! 🎉");
+      router.push("/dashboard");
+      setLoading(false);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      setLoading(false);
+    },
+  });
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    saveCurrencyFnc.mutate();
+  }
 
   return (
     <div>
-      <Select onValueChange={setSelectedCurrency}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select currency" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value="inr">Indian Rupees (INR)</SelectItem>
-            <SelectItem value="usd">US Dollar (USD)</SelectItem>
-            <SelectItem value="eur">Euro (EUR)</SelectItem>
-            <SelectItem value="gbp">British Pound (GBP)</SelectItem>
-            <SelectItem value="cad">Canadian Dollar (CAD)</SelectItem>
-            <SelectItem value="aud">Australian Dollar (AUD)</SelectItem>
-            <SelectItem value="chf">Swiss Franc (CHF)</SelectItem>
-            <SelectItem value="nzd">New Zealand Dollar (NZD)</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <div className="mt-8 flex justify-end">
-        <Button className="w-full" onClick={handleSave}>
-          Save
-        </Button>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <Select onValueChange={setSelectedCurrency}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select currency" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {Currencies.map((currency) => (
+                <SelectItem key={currency.value} value={currency.value}>
+                  {currency.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <div className="mt-8 flex justify-end">
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={saveCurrencyFnc.isPending}
+          >
+            Save{" "}
+            <span>
+              {saveCurrencyFnc.isPending && (
+                <Loader className="animate-spin ml-2" size={18} />
+              )}
+            </span>
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

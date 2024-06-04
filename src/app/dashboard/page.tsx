@@ -1,17 +1,15 @@
 import { auth } from "@/auth";
 import IntroHeader from "@/components/IntroHeader";
-import { Button } from "@/components/ui/button";
-import { ArrowDown, ArrowDownNarrowWide } from "lucide-react";
 import { redirect } from "next/navigation";
 import React from "react";
 import DropDown from "./(Dash-Comp)/DropDown";
 import OverviewBoxes from "@/components/OverviewBoxes";
-import prisma from "@/db";
+import prisma from "@/lib/db";
 
 async function page() {
   const session = await auth();
 
-  const isCurrencyAvailable = await prisma.user.findFirst({
+  const isCurrencyAvailable = await prisma.user.findUnique({
     where: {
       email: session?.user?.email!,
     },
@@ -21,7 +19,7 @@ async function page() {
     },
   });
 
-  if (!isCurrencyAvailable) {
+  if (!isCurrencyAvailable?.currency) {
     redirect("/currency");
   }
 

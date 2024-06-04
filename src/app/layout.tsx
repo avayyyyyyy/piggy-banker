@@ -4,10 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
-
-import { auth } from "@/auth";
-import { revalidatePath } from "next/cache";
 import { Toaster } from "@/components/ui/sonner";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,9 +32,10 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <ReactQueryDevtools initialIsOpen={false} />
           </ThemeProvider>
         </SessionProvider>
-        <Toaster position="bottom-right" />
+        <Toaster richColors position="bottom-right" />
       </body>
     </html>
   );

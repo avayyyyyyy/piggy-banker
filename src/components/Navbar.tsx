@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { logout } from "@/Actions/actions";
+import { logout } from "@/actions/actions";
 import { Button } from "./ui/button";
 import { LayoutDashboard, UsersRound, Wallet } from "lucide-react";
 import NavLinks from "./NavLinks";

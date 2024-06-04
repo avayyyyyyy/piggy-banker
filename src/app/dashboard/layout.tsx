@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import Navbar from "@/components/Navbar";
-import prisma from "@/db";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
 

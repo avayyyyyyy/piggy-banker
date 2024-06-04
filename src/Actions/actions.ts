@@ -1,6 +1,6 @@
 "use server";
 import { auth, signIn, signOut } from "@/auth";
-import prisma from "@/db";
+import prisma from "@/lib/db";
 export const signInGithub = async () => {
   await signIn("github");
 };
@@ -16,6 +16,13 @@ export const logout = async () => {
 export const saveCurrency = async (Usercurrency: string) => {
   try {
     const session = await auth();
+
+    console.log(Usercurrency);
+
+    if (Usercurrency === "") {
+      console.log("------------");
+      throw new Error("Select a valid currency.");
+    }
     const currency = await prisma.user.update({
       where: {
         email: session?.user?.email!,
@@ -27,6 +34,6 @@ export const saveCurrency = async (Usercurrency: string) => {
 
     return { status: "ok" };
   } catch (err) {
-    throw new Error("Currency Not Updated");
+    throw new Error("Select a valid currency.");
   }
 };

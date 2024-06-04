@@ -12,7 +12,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { LayoutDashboard, UsersRound, Wallet } from "lucide-react";
 import { signOut } from "@/auth";
-import { logout } from "@/Actions/actions";
+import { logout } from "@/actions/actions";
 
 function UserAvatar({
   data,
