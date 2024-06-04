@@ -17,12 +17,9 @@ function CurrencyForm() {
   const [selectedCurrency, setSelectedCurrency] = useState("");
   const router = useRouter();
   const handleSave = () => {
-    console.log("Selected Currency:", selectedCurrency);
-
     const isSaved = saveCurrency(selectedCurrency).then((e) => {
       if (e.status === "ok") {
         toast.success("Currency Updated Successfully!");
-        console.log("currency Updated");
         router.push("/dashboard");
       }
     });

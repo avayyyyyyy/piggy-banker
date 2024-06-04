@@ -21,8 +21,6 @@ async function page() {
     },
   });
 
-  console.log(isCurrencyAvailable?.currency);
-
   if (!isCurrencyAvailable) {
     redirect("/currency");
   }

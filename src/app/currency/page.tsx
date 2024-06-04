@@ -27,8 +27,6 @@ async function page() {
     },
   });
 
-  console.log(isCurrencyAvailable?.currency);
-
   if (isCurrencyAvailable?.currency) {
     redirect("/dashboard");
   }

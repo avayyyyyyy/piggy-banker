@@ -3,7 +3,6 @@ import React from "react";
 
 async function IntroHeader() {
   const data = await auth();
-  console.log(data);
 
   return (
     <div>
