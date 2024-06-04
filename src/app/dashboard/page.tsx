@@ -6,8 +6,27 @@ import { redirect } from "next/navigation";
 import React from "react";
 import DropDown from "./(Dash-Comp)/DropDown";
 import OverviewBoxes from "@/components/OverviewBoxes";
+import prisma from "@/db";
 
 async function page() {
+  const session = await auth();
+
+  const isCurrencyAvailable = await prisma.user.findFirst({
+    where: {
+      email: session?.user?.email!,
+    },
+
+    select: {
+      currency: true,
+    },
+  });
+
+  console.log(isCurrencyAvailable?.currency);
+
+  if (!isCurrencyAvailable) {
+    redirect("/currency");
+  }
+
   return (
     <div>
       <IntroHeader />

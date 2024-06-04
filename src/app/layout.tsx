@@ -7,6 +7,7 @@ import { Session } from "next-auth";
 
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +36,7 @@ export default async function RootLayout({
             {children}
           </ThemeProvider>
         </SessionProvider>
+        <Toaster position="bottom-right" />
       </body>
     </html>
   );
