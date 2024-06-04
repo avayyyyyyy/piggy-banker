@@ -25,8 +25,8 @@ async function Navbar() {
   const session = await auth();
 
   return (
-    <div className="max-w-[80vw] mb-10 mx-auto flex justify-between px-4 border-b border-primary/10 ">
-      <div className="flex items-center gap-5 py-5">
+    <div className="md:max-w-[80vw] max-w-screen mb-10 mx-auto flex justify-between px-4  md:px-6 border-b border-primary/10 ">
+      <div className="flex items-center md:gap-5 py-5">
         <Logo />
         <NavLinks />
       </div>
@@ -51,24 +51,24 @@ async function Navbar() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <div className="flex flex-col text-sm py-2 justify-start gap-y-2 px-2 ">
+                <div className="md:flex flex-col text-sm py-2 justify-start gap-y-2 px-2 ">
                   <Link
                     href={"/dashboard"}
-                    className="hover:bg-secondary/50  px-1 py-1 rounded-lg w-full flex items-center justify-between"
+                    className="hover:bg-secondary/50 px-1 py-1 rounded-lg w-full flex items-center justify-between"
                   >
                     Dashboard
                     <LayoutDashboard size={16} />
                   </Link>
                   <Link
                     href={"/dashboard/transaction"}
-                    className="hover:bg-secondary/50  px-1 py-1 rounded-lg w-full flex items-center justify-between"
+                    className="hover:bg-secondary/50 px-1 py-1 rounded-lg w-full flex items-center justify-between"
                   >
                     Transactions
                     <Wallet size={16} />
                   </Link>
                   <Link
                     href={"/dashboard/manage"}
-                    className="hover:bg-secondary/50  px-1 py-1 rounded-lg w-full flex items-center justify-between"
+                    className="hover:bg-secondary/50 px-1 py-1 rounded-lg w-full flex items-center justify-between"
                   >
                     Manage
                     <UsersRound size={16} />

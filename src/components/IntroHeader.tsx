@@ -7,7 +7,7 @@ async function IntroHeader() {
 
   return (
     <div>
-      <div className="flex justify-between border-b border-primary/10 pb-10 ">
+      <div className="flex flex-col md:flex-row space-y-3 pb-7  md:space-y-0 items-center justify-between border-b border-primary/10 ">
         <div className="text-3xl font-bold">
           Hello, {data?.user?.name?.split(" ")[0]} 👋🏻
         </div>

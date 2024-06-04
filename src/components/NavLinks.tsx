@@ -9,10 +9,10 @@ function NavLinks() {
   return (
     <div>
       {path !== "/" ? (
-        <div className="flex gap-x-3 text-lg font-medium">
+        <div className="lg:flex gap-x-3 hidden text-lg font-medium">
           <Link
             href={"/dashboard"}
-            className={` px-3 py-1 ${
+            className={` px-3 py-1 md:text-md hidden md:block  ${
               path === "/dashboard" && "border-b-2  border-red-700"
             } `}
           >
@@ -20,7 +20,7 @@ function NavLinks() {
           </Link>
           <Link
             href={"/dashboard/transaction"}
-            className={` px-3 py-1 ${
+            className={` px-3 py-1 md:text-md hidden md:block  ${
               path === "/dashboard/transaction" && "border-b-2  border-red-700"
             } `}
           >
@@ -28,7 +28,7 @@ function NavLinks() {
           </Link>
           <Link
             href={"/dashboard/manage"}
-            className={` px-3 py-1 ${
+            className={` px-3 py-1 md:text-md hidden md:block  ${
               path === "/dashboard/manage" && "border-b-2  border-red-700"
             } `}
           >

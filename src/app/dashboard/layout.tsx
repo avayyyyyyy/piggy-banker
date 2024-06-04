@@ -10,7 +10,7 @@ async function layout({ children }: { children: ReactNode }) {
     return redirect("/");
   }
   return (
-    <div className="max-w-[80vw] mx-auto">
+    <div className="md:max-w-[80vw] px-6 w-screen md:px-4 overflow-hidden  mx-auto">
       <Navbar />
       {children}
     </div>

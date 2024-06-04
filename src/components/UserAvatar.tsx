@@ -39,14 +39,14 @@ function UserAvatar({
           <div className="flex flex-col text-sm py-2 justify-start gap-y-2 px-2 ">
             <Link
               href={"/dashboard"}
-              className="hover:bg-secondary/50  px-1 py-1 rounded-lg w-full flex items-center justify-between"
+              className="hover:bg-secondary/50 px-1 py-1 rounded-lg w-full flex text-sm  items-center justify-between"
             >
               Dashboard
               <LayoutDashboard size={16} />
             </Link>
             <Link
               href={"/dashboard/transaction"}
-              className="hover:bg-secondary/50  px-1 py-1 rounded-lg w-full flex items-center justify-between"
+              className="hover:bg-secondary/50 px-1 py-1 rounded-lg w-full flex text-sm  items-center justify-between"
             >
               Transactions
               <Wallet size={16} />

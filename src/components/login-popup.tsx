@@ -17,7 +17,7 @@ export function LoginPopup() {
       <DialogTrigger asChild>
         <Button variant="outline">Sign In</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[80vw] rounded-md">
         <DialogHeader>
           <DialogTitle>Sign In</DialogTitle>
           <DialogDescription>
