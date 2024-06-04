@@ -8,14 +8,14 @@ generator client {
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String          @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
+  currency      String?
   accounts      Account[]
   sessions      Session[]
-  Authenticator Authenticator[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -52,25 +52,48 @@ model Session {
   updatedAt DateTime @updatedAt
 }
 
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
+model Category {
+  createdAt DateTime @default(now())
+  name      String
+  userId    String
+  icon      String
+  type      String   @default("income")
 
-  @@id([identifier, token])
+  @@unique([name, userId, type])
 }
 
-model Authenticator {
-  credentialID         String  @unique
-  userId               String
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
+model Transaction {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updateAt  DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount      Float
+  description String
+  date        DateTime
+  userId      String
+  type        String   @default("income")
 
-  @@id([userId, credentialID])
+  category     String
+  categoryIcon String
+}
+
+model MonthHistory {
+  userId  String
+  day     Int
+  month   Int
+  year    Int
+  income  Float
+  expense Float
+
+  @@id([day, month, year, userId])
+}
+
+model YearHistory {
+  userId  String
+  month   Int
+  year    Int
+  income  Float
+  expense Float
+
+  @@id([month, year, userId])
 }
