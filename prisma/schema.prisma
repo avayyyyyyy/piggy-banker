@@ -8,14 +8,18 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  image         String?
-  currency      String?
-  emailVerified DateTime?
-  accounts      Account[]
-  sessions      Session[]
+  id             String         @id @default(cuid())
+  name           String?
+  email          String         @unique
+  image          String?
+  currency       String?
+  emailVerified  DateTime?
+  accounts       Account[]
+  sessions       Session[]
+  categories     Category[]
+  transactions   Transaction[]
+  monthhistories MonthHistory[]
+  yearhistories  YearHistory[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,47 +57,58 @@ model Session {
 }
 
 model Category {
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   name      String
-  userId    String
   icon      String
   type      String   @default("income")
 
-  @@unique([name, userId, type])
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@unique([name, type, icon, userId])
 }
 
 model Transaction {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  updateAt  DateTime @default(now())
+  updatedAt DateTime @default(now())
 
   amount      Float
   description String
   date        DateTime
-  userId      String
   type        String   @default("income")
 
   category     String
   categoryIcon String
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
 }
 
 model MonthHistory {
-  userId  String
+  id      String  @id @default(uuid())
   day     Int
   month   Int
   year    Int
   income  Float
   expense Float
+  userId  String?
 
-  @@id([day, month, year, userId])
+  user User? @relation(fields: [userId], references: [id])
+
+  @@unique([userId, day, month, year])
 }
 
 model YearHistory {
-  userId  String
+  id      String  @id @default(uuid())
   month   Int
   year    Int
   income  Float
   expense Float
+  userId  String?
 
-  @@id([month, year, userId])
+  user User? @relation(fields: [userId], references: [id])
+
+  @@unique([month, year, userId])
 }
