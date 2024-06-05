@@ -20,7 +20,6 @@ export const saveCurrency = async (Usercurrency: string) => {
     console.log(Usercurrency);
 
     if (Usercurrency === "") {
-      console.log("------------");
       throw new Error("Select a valid currency.");
     }
     const currency = await prisma.user.update({
@@ -35,5 +34,113 @@ export const saveCurrency = async (Usercurrency: string) => {
     return { status: "ok" };
   } catch (err) {
     throw new Error("Select a valid currency.");
+  }
+};
+
+type SaveCategoryParams = {
+  title: string;
+  icon: string;
+};
+
+export const saveCategory = async ({ title, icon }: SaveCategoryParams) => {
+  console.log(title, icon);
+  try {
+    const session = await auth();
+
+    if (!title || !icon) {
+      console.log(title, icon);
+
+      throw new Error("Input Fields are required!");
+    }
+
+    if (!session?.user?.email) {
+      throw new Error("User is not authenticated");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: session.user.email,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    console.log(user);
+
+    const category = await prisma.category.create({
+      data: {
+        name: title,
+        icon: icon,
+        userId: user.id,
+      },
+    });
+
+    console.log(category);
+    return { success: "ok" };
+  } catch (err) {
+    console.error("Error creating category:", err);
+    throw new Error("Unable to create category.");
+  }
+};
+
+export const getCategories = async () => {
+  try {
+    const categories = await prisma.category.findMany();
+    console.log(categories);
+    return categories;
+  } catch (err) {
+    throw new Error("Unable To fectch categories");
+  }
+};
+
+export const saveIncome = async (body: {
+  desc: string;
+  price: string;
+  category: string;
+  date: Date | undefined;
+}) => {
+  try {
+    const session = await auth();
+
+    if (!body.category || !body.date || !body.desc || !body.price) {
+      throw new Error("Please enter valid inputs");
+    }
+
+    console.log(body);
+
+    const catIcon = body.category.split(" ")[0];
+
+    console.log(catIcon);
+
+    if (!session?.user?.email) {
+      throw new Error("User is not authenticated");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: session.user.email,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const income = await prisma.transaction.create({
+      data: {
+        amount: parseFloat(body.price),
+        description: body.desc,
+        date: body.date,
+        category: body.category,
+        categoryIcon: catIcon,
+        userId: user.id,
+      },
+    });
+
+    return { status: "ok" };
+  } catch (err) {
+    throw new Error("Unable to create income, Please try again.");
   }
 };
