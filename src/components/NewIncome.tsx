@@ -86,12 +86,6 @@ function NewIncome() {
   const saveIncomeFnc = useMutation({
     mutationKey: ["saveIncome"],
     mutationFn: async () => {
-      console.log("Saving income with data:", {
-        date,
-        description,
-        category: selectedCategory,
-        price: amount,
-      });
       await saveIncome({
         date,
         desc: description,
@@ -110,12 +104,7 @@ function NewIncome() {
 
   function handleSubmitIncome(e: FormEvent) {
     e.preventDefault();
-    console.log("Submitting income form with state:", {
-      date,
-      description,
-      selectedCategory,
-      amount,
-    });
+
     saveIncomeFnc.mutate();
   }
 
@@ -139,7 +128,6 @@ function NewIncome() {
               <Label htmlFor="description">Description:</Label>
               <Input
                 name="description"
-                required
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-[90%] md:w-full"
                 placeholder="House Rent"
@@ -151,7 +139,6 @@ function NewIncome() {
             <div className="flex flex-col space-y-2">
               <Label htmlFor="amount">Amount:</Label>
               <Input
-                required
                 name="amount"
                 onChange={(e) => setAmount(e.target.value)}
                 type="number"
@@ -250,8 +237,12 @@ function NewIncome() {
                 </p>
               </div>
             </div>
-            <div className="flex justify-end w-[90%] md:w-full gap-4">
-              <Button variant={"secondary"} onClick={() => setOpen(false)}>
+            <div className="flex justify-end w-[90%] md:w-full mt-4  gap-4">
+              <Button
+                type="reset"
+                variant={"secondary"}
+                onClick={() => setOpen(false)}
+              >
                 Cancel
               </Button>
               <Button
