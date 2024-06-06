@@ -41,14 +41,14 @@ import { Input } from "@/components/ui/input";
 import { FormEvent } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
-  getIncomeCategories,
-  saveCategoryIncome,
-  saveIncome,
+  getExpenseCategories,
+  saveCategoryExpense,
+  saveExpense,
 } from "@/actions/actions";
 import { toast } from "sonner";
 import { ChevronDownIcon, Loader, PlusIcon } from "lucide-react";
 
-function NewIncome() {
+function NewExpense() {
   const [open, setOpen] = useState(false);
   const [description, setDescription] = useState("");
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -62,9 +62,9 @@ function NewIncome() {
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
   const { mutate: saveCategoryFnc, isPending: categoryLoading } = useMutation({
-    mutationKey: ["SaveCategory"],
+    mutationKey: ["saveCategoryExpense"],
     mutationFn: async () => {
-      await saveCategoryIncome(categoryInfo);
+      await saveCategoryExpense(categoryInfo);
     },
 
     onSuccess: () => {
@@ -83,8 +83,8 @@ function NewIncome() {
   });
 
   const FetchCategories = useQuery({
-    queryKey: ["FetchIncomeCategories"],
-    queryFn: async () => await getIncomeCategories(),
+    queryKey: ["getExpenseCategories"],
+    queryFn: async () => await getExpenseCategories(),
     refetchOnMount: "always",
   });
 
@@ -94,9 +94,9 @@ function NewIncome() {
   }
 
   const saveIncomeFnc = useMutation({
-    mutationKey: ["saveIncome"],
+    mutationKey: ["saveExpense"],
     mutationFn: async () => {
-      await saveIncome({
+      await saveExpense({
         date,
         desc: description,
         category: selectedCategory,
@@ -123,15 +123,15 @@ function NewIncome() {
     <div>
       <Dialog open={open}>
         <DialogTrigger asChild onClick={() => setOpen(!open)}>
-          <button className="bg-green-900 border text-sm md:text-lg text-white px-3 py-1 font-semibold border-green-400 rounded-md">
-            New Income 🤑
+          <button className="bg-red-900 border text-sm md:text-lg text-white px-3 py-1 font-semibold border-red-400 rounded-md">
+            New Expense 😤
           </button>
         </DialogTrigger>
         <DialogContent className="w-[90vw] mx-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl">
-              Create a <span className="text-green-600">new</span> income
-              transaction 💸
+              Create a <span className="text-red-600">new</span> income
+              transaction 🥲
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmitIncome}>
@@ -351,4 +351,4 @@ function NewIncome() {
   );
 }
 
-export default NewIncome;
+export default NewExpense;

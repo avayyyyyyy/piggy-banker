@@ -5,8 +5,10 @@ import React from "react";
 import DropDown from "./(Dash-Comp)/DropDown";
 import OverviewBoxes from "@/components/OverviewBoxes";
 import prisma from "@/lib/db";
+import { useQuery } from "@tanstack/react-query";
+import { getTransaction } from "@/actions/actions";
 
-async function page() {
+async function Page() {
   const session = await auth();
 
   const isCurrencyAvailable = await prisma.user.findUnique({
@@ -23,6 +25,32 @@ async function page() {
     redirect("/currency");
   }
 
+  const currency = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email!,
+    },
+    select: { currency: true },
+  });
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email!,
+    },
+  });
+
+  const transactions = await prisma.transaction.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  const incomes = transactions.filter((trans) => trans.type === "income");
+  const expense = transactions.filter((trans) => trans.type === "expense");
+
+  const totalIncome = incomes.reduce((acc, e) => acc + e.amount, 0);
+  const totalExpense = expense.reduce((acc, e) => acc + e.amount, 0);
+  const wallet = totalIncome - totalExpense;
+
   return (
     <div>
       <IntroHeader />
@@ -34,18 +62,26 @@ async function page() {
           </div>
         </div>
         <div className="flex md:flex-row flex-col  justify-between mt-4 gap-3">
-          <OverviewBoxes color="red" icon="up" title="Income" value="0.00" />
           <OverviewBoxes
+            currency={currency?.currency!}
+            color="red"
+            icon="up"
+            title="Income"
+            value={totalIncome}
+          />
+          <OverviewBoxes
+            currency={currency?.currency!}
             color="green"
             icon="down"
             title="Outcome"
-            value="0.00"
+            value={totalExpense}
           />
           <OverviewBoxes
+            currency={currency?.currency!}
             color="blue"
             icon="wallet"
             title="Wallet"
-            value="0.00"
+            value={wallet}
           />
         </div>
         <div className="flex flex-col md:flex-row  justify-between  gap-3 mt-3">
@@ -77,4 +113,4 @@ async function page() {
   );
 }
 
-export default page;
+export default Page;

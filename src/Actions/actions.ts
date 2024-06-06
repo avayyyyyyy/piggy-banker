@@ -40,7 +40,10 @@ type SaveCategoryParams = {
   icon: string;
 };
 
-export const saveCategory = async ({ title, icon }: SaveCategoryParams) => {
+export const saveCategoryExpense = async ({
+  title,
+  icon,
+}: SaveCategoryParams) => {
   try {
     const session = await auth();
 
@@ -67,6 +70,7 @@ export const saveCategory = async ({ title, icon }: SaveCategoryParams) => {
         name: title,
         icon: icon,
         userId: user.id,
+        type: "expense",
       },
     });
 
@@ -77,11 +81,72 @@ export const saveCategory = async ({ title, icon }: SaveCategoryParams) => {
   }
 };
 
-export const getCategories = async () => {
+export const saveCategoryIncome = async ({
+  title,
+  icon,
+}: SaveCategoryParams) => {
+  try {
+    const session = await auth();
+
+    console.log(title, icon);
+
+    if (!title || !icon) {
+      throw new Error("Input Fields are required!");
+    }
+
+    console.log("----------");
+
+    if (!session?.user?.email) {
+      throw new Error("User is not authenticated");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: session.user.email,
+      },
+    });
+
+    console.log("----------");
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    console.log("------------")
+
+    const category = await prisma.category.create({
+      data: {
+        name: title,
+        icon: icon,
+        userId: user.id,
+        type: "income",
+      },
+    });
+
+    console.log(category);
+
+    return { success: "ok" };
+  } catch (err) {
+    console.error("Error creating category:", err);
+    throw new Error("Unable to create category.");
+  }
+};
+
+export const getExpenseCategories = async () => {
   try {
     const categories = await prisma.category.findMany();
-    categories;
-    return categories;
+    const filtered = categories.filter((e) => e.type !== "income");
+    return filtered;
+  } catch (err) {
+    throw new Error("Unable To fectch categories");
+  }
+};
+
+export const getIncomeCategories = async () => {
+  try {
+    const categories = await prisma.category.findMany();
+    const filtered = categories.filter((e) => e.type === "income");
+    return filtered;
   } catch (err) {
     throw new Error("Unable To fectch categories");
   }
@@ -136,4 +201,76 @@ export const saveIncome = async (body: {
   } catch (err) {
     throw new Error("Unable to create income, Please try again.");
   }
+};
+
+export const saveExpense = async (body: {
+  desc: string;
+  price: string;
+  category: string;
+  date: Date | undefined;
+}) => {
+  try {
+    const session = await auth();
+
+    if (!body.category || !body.date || !body.desc || !body.price) {
+      throw new Error("Please enter valid inputs");
+    }
+
+    const catIcon = body.category.split(" ")[0];
+    const cat = body.category.split(" ")[1];
+
+    catIcon;
+
+    if (!session?.user?.email) {
+      throw new Error("User is not authenticated");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: session.user.email,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const expense = await prisma.transaction.create({
+      data: {
+        amount: parseFloat(body.price),
+        description: body.desc,
+        date: body.date,
+        category: cat,
+        categoryIcon: catIcon,
+        type: "expense",
+        userId: user.id,
+      },
+    });
+
+    return { status: "ok" };
+  } catch (err) {
+    throw new Error("Unable to create income, Please try again.");
+  }
+};
+
+export const getTransaction = async () => {
+  const session = await auth();
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email!,
+    },
+  });
+
+  const transactions = await prisma.transaction.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+  return transactions;
+};
+
+export const getUserDetails = async () => {
+  const session = await auth();
+
+  return session;
 };

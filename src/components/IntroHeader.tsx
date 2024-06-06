@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import React from "react";
 import NewIncome from "./NewIncome";
+import NewExpense from "./NewExpense";
 
 async function IntroHeader() {
   const data = await auth();
@@ -13,9 +14,7 @@ async function IntroHeader() {
         </div>
         <div className="flex space-x-2">
           <NewIncome />
-          <button className="bg-red-900 border text-sm md:text-lg  text-white px-3 py-1 font-semibold border-red-400 rounded-md">
-            New Expense 😤
-          </button>
+          <NewExpense />
         </div>
       </div>
     </div>

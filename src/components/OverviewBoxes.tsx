@@ -1,16 +1,19 @@
 import { TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import React from "react";
+import TypingAnimation from "./magicui/typing-animation";
 
-function OverviewBoxes({
+async function OverviewBoxes({
   color,
   title,
   value,
   icon,
+  currency,
 }: {
   color: string;
   title: string;
-  value: string;
+  value: number;
   icon: string;
+  currency: string;
 }) {
   return (
     <div className="flex space-x-4 border w-full p-4 rounded-md ">
@@ -30,7 +33,11 @@ function OverviewBoxes({
       </div>
       <div>
         <div className="text-xl font-semibold">{title}</div>
-        <div>${value}</div>
+        {currency === "INR" && (
+          <div className="flex space-x-1">
+            ₹{<TypingAnimation text={`${value}`} />}
+          </div>
+        )}
       </div>
     </div>
   );
