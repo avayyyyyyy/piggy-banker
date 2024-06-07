@@ -294,7 +294,7 @@ function NewExpense() {
                 />
               </div>
               <div className=" w-full  items-center grid-cols-4 gap-4">
-                <div className="flex flex-col w-[100% p-4 rounded-lg border-primary/40 border border-dashed  justify-center items-center">
+                <div className="flex flex-col w-[100%] p-4 rounded-lg hover:bg-primary/20 cursor-pointer border-primary/40 border border-dashed  justify-center items-center">
                   {categoryInfo.icon === "Select Icon" ? (
                     <div
                       onClick={() => {
@@ -315,10 +315,10 @@ function NewExpense() {
                           skinTonesDisabled
                         />
                       ) : (
-                        <>
+                        <div className="flex flex-col justify-center items-center">
                           <UploadCloudIcon />
                           <p className="text-right">Select Icon</p>
-                        </>
+                        </div>
                       )}
                     </div>
                   ) : (
