@@ -11,7 +11,7 @@ async function layout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="md:max-w-[80vw] px-6 w-screen md:px-4 overflow-hidden  mx-auto">
+    <div className="md:max-w-[90vw] px-6 w-screen md:px-4 overflow-hidden  mx-auto">
       <Navbar />
       {children}
     </div>

@@ -74,6 +74,8 @@ export const saveCategoryExpense = async ({
       },
     });
 
+    console.log(category);
+
     return { success: "ok" };
   } catch (err) {
     console.error("Error creating category:", err);
@@ -94,8 +96,6 @@ export const saveCategoryIncome = async ({
       throw new Error("Input Fields are required!");
     }
 
-    console.log("----------");
-
     if (!session?.user?.email) {
       throw new Error("User is not authenticated");
     }
@@ -106,13 +106,9 @@ export const saveCategoryIncome = async ({
       },
     });
 
-    console.log("----------");
-
     if (!user) {
       throw new Error("User not found");
     }
-
-    console.log("------------")
 
     const category = await prisma.category.create({
       data: {
@@ -122,8 +118,6 @@ export const saveCategoryIncome = async ({
         type: "income",
       },
     });
-
-    console.log(category);
 
     return { success: "ok" };
   } catch (err) {
@@ -164,13 +158,10 @@ export const saveIncome = async (body: {
     if (!body.category || !body.date || !body.desc || !body.price) {
       throw new Error("Please enter valid inputs");
     }
-
-    body;
+    console.log(body.category);
 
     const catIcon = body.category.split(" ")[0];
-    const cat = body.category.split(" ")[1];
-
-    catIcon;
+    const cat = body.category.split(" ")[2];
 
     if (!session?.user?.email) {
       throw new Error("User is not authenticated");
@@ -197,6 +188,8 @@ export const saveIncome = async (body: {
       },
     });
 
+    console.log(income);
+
     return { status: "ok" };
   } catch (err) {
     throw new Error("Unable to create income, Please try again.");
@@ -217,9 +210,7 @@ export const saveExpense = async (body: {
     }
 
     const catIcon = body.category.split(" ")[0];
-    const cat = body.category.split(" ")[1];
-
-    catIcon;
+    const cat = body.category.split(" ")[2];
 
     if (!session?.user?.email) {
       throw new Error("User is not authenticated");

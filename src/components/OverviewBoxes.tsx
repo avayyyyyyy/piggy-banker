@@ -1,6 +1,7 @@
 import { TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import React from "react";
-import TypingAnimation from "./magicui/typing-animation";
+import TextTicker from "@/components/Custom/typing-ticker";
+import { Currencies } from "@/lib/currencies";
 
 async function OverviewBoxes({
   color,
@@ -15,27 +16,30 @@ async function OverviewBoxes({
   icon: string;
   currency: string;
 }) {
+  const iconss = Currencies.filter((e) => e.value === currency).map(
+    (e) => e.symbol
+  );
+
   return (
     <div className="flex space-x-4 border w-full p-4 rounded-md ">
       <div
-        className={`p-3 rounded-md  bg-opacity-25 ${
-          color === "red" ? "text-red-600 bg-red-500" : ""
+        className={` rounded-md flex justify-center items-center p-4  bg-opacity-25 ${
+          color === "red" ? "text-red-600 bg-red-900" : ""
         }
-        ${color === "green" ? "text-green-600 bg-green-500" : ""}
-        ${color === "blue" ? "text-blue-600 bg-blue-500" : ""}
-
-
+        ${color === "green" ? "text-green-600 bg-green-900" : ""}
+        ${color === "blue" ? "text-blue-600 bg-blue-900" : ""}
         `}
       >
-        {icon === "up" && <TrendingUp size={24} />}
-        {icon === "down" && <TrendingDown size={24} />}
-        {icon === "wallet" && <Wallet size={24} />}
+        {icon === "up" && <TrendingUp size={28} />}
+        {icon === "down" && <TrendingDown size={28} />}
+        {icon === "wallet" && <Wallet size={28} />}
       </div>
       <div>
-        <div className="text-xl font-semibold">{title}</div>
-        {currency === "INR" && (
-          <div className="flex space-x-1">
-            ₹{<TypingAnimation text={`${value}`} />}
+        <div className="text-xl text-primary/50">{title}</div>
+        {currency && (
+          <div className="flex text-2xl text-primary font-medium  space-x-1">
+            {iconss}
+            {value === 0 ? <div>0.00</div> : <TextTicker value={value} />}
           </div>
         )}
       </div>

@@ -5,51 +5,81 @@ import React from "react";
 import DropDown from "./(Dash-Comp)/DropDown";
 import OverviewBoxes from "@/components/OverviewBoxes";
 import prisma from "@/lib/db";
-import { useQuery } from "@tanstack/react-query";
-import { getTransaction } from "@/actions/actions";
+import { Currencies } from "@/lib/currencies";
+import { Progress } from "@/components/ui/progress";
+
+interface Transaction {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  amount: number;
+  description: string;
+  date: Date;
+  type: string;
+  category: string;
+  categoryIcon: string;
+  userId: string | null;
+}
+
+interface AggregatedCategory {
+  category: string;
+  categoryIcon: string;
+  amount: number;
+}
+
+const aggregateAndSort = (
+  transactions: Transaction[],
+  type: string
+): AggregatedCategory[] => {
+  const aggregated = transactions
+    .filter((trans) => trans.type === type)
+    .reduce(
+      (
+        acc: Record<string, AggregatedCategory>,
+        { category, amount, categoryIcon }
+      ) => {
+        if (!acc[category]) {
+          acc[category] = { amount: 0, category, categoryIcon };
+        }
+        acc[category].amount += amount;
+        return acc;
+      },
+      {}
+    );
+
+  return Object.values(aggregated)
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 5);
+};
 
 async function Page() {
   const session = await auth();
 
-  const isCurrencyAvailable = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email!,
-    },
-
-    select: {
-      currency: true,
-    },
+  const user = await prisma.user.findUnique({
+    where: { email: session?.user?.email! },
+    select: { id: true, currency: true },
   });
 
-  if (!isCurrencyAvailable?.currency) {
+  if (!user?.currency) {
     redirect("/currency");
   }
 
-  const currency = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email!,
-    },
-    select: { currency: true },
+  const transactions: Transaction[] = await prisma.transaction.findMany({
+    where: { userId: user.id },
   });
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email!,
-    },
-  });
+  const topIncome = aggregateAndSort(transactions, "income");
+  const topExpenses = aggregateAndSort(transactions, "expense");
 
-  const transactions = await prisma.transaction.findMany({
-    where: {
-      userId: user?.id,
-    },
-  });
-
-  const incomes = transactions.filter((trans) => trans.type === "income");
-  const expense = transactions.filter((trans) => trans.type === "expense");
-
-  const totalIncome = incomes.reduce((acc, e) => acc + e.amount, 0);
-  const totalExpense = expense.reduce((acc, e) => acc + e.amount, 0);
+  const totalIncome = transactions
+    .filter((trans) => trans.type === "income")
+    .reduce((acc, e) => acc + e.amount, 0);
+  const totalExpense = transactions
+    .filter((trans) => trans.type === "expense")
+    .reduce((acc, e) => acc + e.amount, 0);
   const wallet = totalIncome - totalExpense;
+
+  console.log(totalIncome);
 
   return (
     <div>
@@ -57,54 +87,86 @@ async function Page() {
       <div>
         <div className="flex justify-between items-center mt-3">
           <div className="text-2xl font-bold">Overview</div>
-          <div>
-            <DropDown />
-          </div>
+          <DropDown />
         </div>
-        <div className="flex md:flex-row flex-col  justify-between mt-4 gap-3">
+        <div className="flex md:flex-row flex-col justify-between mt-4 gap-3">
           <OverviewBoxes
-            currency={currency?.currency!}
-            color="red"
+            currency={user.currency}
+            color="green"
             icon="up"
             title="Income"
             value={totalIncome}
           />
           <OverviewBoxes
-            currency={currency?.currency!}
-            color="green"
+            currency={user.currency}
+            color="red"
             icon="down"
-            title="Outcome"
+            title="Expense"
             value={totalExpense}
           />
           <OverviewBoxes
-            currency={currency?.currency!}
+            currency={user.currency}
             color="blue"
             icon="wallet"
             title="Wallet"
             value={wallet}
           />
         </div>
-        <div className="flex flex-col md:flex-row  justify-between  gap-3 mt-3">
-          <div className="border w-full p-3 rounded-md">
-            <div className="text-2xl px-2  font-bold text-primary/40">
+        <div className="flex flex-col md:flex-row justify-between w-full gap-3 mt-3">
+          <div className="border w-full p-4 rounded-md">
+            <div className="text-2xl px-2 mb-1 font-semibold text-primary/40">
               Incomes by category
             </div>
-            <div className=" flex justify-center items-center flex-col h-[30vh]">
-              <div>No data for the selected period</div>
-              <p className="text-sm text-primary/40 text-center">
-                Try selecting a different period or try adding new incomes
-              </p>
+            <div className="border-b border-primary/10 mb-5 md:my-3"></div>
+            <div className="flex items-center w-full justify-start flex-col h-[30vh]">
+              {topIncome.length > 0 ? (
+                topIncome.map((e) => (
+                  <CategoryItem
+                    key={e.category}
+                    icon={e.categoryIcon}
+                    category={e.category}
+                    currency={user.currency!}
+                    amount={e.amount}
+                    percentage={Math.floor((e.amount / totalIncome) * 100)}
+                    isIncome={true}
+                  />
+                ))
+              ) : (
+                <div className="flex flex-col h-full justify-center items-center">
+                  No data for the selected period
+                  <p className="text-sm text-primary/40 text-center">
+                    Try selecting a different period or try adding new incomes
+                  </p>
+                </div>
+              )}
             </div>
           </div>
-          <div className="border w-full p-3 rounded-md">
-            <div className="text-2xl px-2  font-bold text-primary/40">
+          <div className="border w-full h-fit p-4 rounded-md">
+            <div className="text-2xl px-2 mb-1 font-semibold text-primary/40">
               Expenses by category
             </div>
-            <div className=" flex justify-center items-center flex-col h-[30vh]">
-              <div>No data for the selected period</div>
-              <p className="text-sm text-primary/40 text-center">
-                Try selecting a different period or try adding new expenses
-              </p>
+            <div className="border-b border-primary/10 mb-5 md:my-3"></div>
+            <div className="flex items-center w-full justify-start flex-col h-[30vh]">
+              {topExpenses.length > 0 ? (
+                topExpenses.map((e) => (
+                  <CategoryItem
+                    key={e.category}
+                    icon={e.categoryIcon}
+                    category={e.category}
+                    currency={user.currency!}
+                    amount={e.amount}
+                    percentage={Math.floor((e.amount / totalIncome) * 100)}
+                    isIncome={false}
+                  />
+                ))
+              ) : (
+                <div className="flex flex-col h-full justify-center items-center">
+                  No data for the selected period
+                  <p className="text-sm text-primary/40 text-center">
+                    Try selecting a different period or try adding new expenses
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -114,3 +176,41 @@ async function Page() {
 }
 
 export default Page;
+
+interface CategoryItemProps {
+  icon: string;
+  category: string;
+  currency: string;
+  percentage: number;
+  amount: number;
+  isIncome: boolean;
+}
+
+const CategoryItem: React.FC<CategoryItemProps> = ({
+  icon,
+  category,
+  currency,
+  amount,
+  percentage,
+  isIncome,
+}) => {
+  const currencySymbol =
+    Currencies.find((e) => e.value === currency)?.symbol || "";
+
+  const compClassnames = isIncome ? `[&>*]:bg-green-500` : `[&>*]:bg-red-500`;
+
+  return (
+    <div className="w-full flex flex-col gap-y-1 mb-5">
+      <div className="flex text-sm justify-between mx-2">
+        <div>
+          {icon} {category} ({percentage}%)
+        </div>
+        <div className="text-primary/60">
+          {currencySymbol}
+          {amount}
+        </div>
+      </div>
+      <Progress className={compClassnames} value={percentage} />
+    </div>
+  );
+};
