@@ -54,7 +54,7 @@ function NewIncome() {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [categoryInfo, setCategoryInfo] = useState({
     title: "",
-    icon: "Select Icon",
+    icon: "",
   });
   const [selectedCategory, setSelectedCategory] = useState("Select Category");
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -72,7 +72,7 @@ function NewIncome() {
       setCategoryOpen(false);
       setCategoryInfo({
         title: "",
-        icon: "Select Icon",
+        icon: "",
       });
       FetchCategories.refetch();
     },
@@ -252,7 +252,9 @@ function NewIncome() {
               <Button
                 type="reset"
                 variant={"secondary"}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                }}
               >
                 Cancel
               </Button>
@@ -295,7 +297,7 @@ function NewIncome() {
               </div>
               <div className=" w-full  items-center grid-cols-4 gap-4">
                 <div className="flex flex-col w-[100%] p-4 rounded-lg hover:bg-primary/20 cursor-pointer border-primary/40 border border-dashed  justify-center items-center">
-                  {categoryInfo.icon === "Select Icon" ? (
+                  {categoryInfo.icon === "" ? (
                     <div
                       onClick={() => {
                         setEmojiPickerOpen(true);
@@ -312,7 +314,6 @@ function NewIncome() {
                             }));
                             setEmojiPickerOpen(false);
                           }}
-                          skinTonesDisabled
                         />
                       ) : (
                         <div className="flex flex-col justify-center items-center">
@@ -336,7 +337,13 @@ function NewIncome() {
               </Button>
               <div>
                 <Button
-                  onClick={() => setCategoryOpen(false)}
+                  onClick={() => {
+                    setCategoryOpen(false);
+                    setCategoryInfo({
+                      title: "",
+                      icon: "",
+                    });
+                  }}
                   variant="outline"
                   type="reset"
                 >

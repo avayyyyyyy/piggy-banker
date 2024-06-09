@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { getTransaction } from "@/actions/actions";
+import { getAllCategories, getTransaction } from "@/actions/actions";
 import { Transaction } from "@prisma/client";
 
 export default function TransactionDataTable({
@@ -34,6 +34,13 @@ export default function TransactionDataTable({
     queryKey: ["Fetch table"],
     queryFn: async () => await getTransaction(),
     refetchOnMount: "always",
+    refetchInterval: 10000,
+  });
+
+  const FetchCategories = useQuery({
+    queryKey: ["FetchIncomeCategories"],
+    queryFn: async () => await getAllCategories(),
+    refetchOnMount: "always",
   });
 
   const filteredTransactionData =
@@ -48,6 +55,9 @@ export default function TransactionDataTable({
       : filteredTransactionData?.filter(
           (transaction: Transaction) => transaction.type === selectedType
         );
+
+  console.log(filteredByType);
+
   let filteredByAmount = filteredByType;
   if (selectedAmount === "aes") {
     filteredByAmount = filteredByType
@@ -75,7 +85,8 @@ export default function TransactionDataTable({
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm">
-                        Category
+                        {selectedCategory[0].toUpperCase()}
+                        {selectedCategory.slice(1)}
                         <ChevronDownIcon className="h-4 w-4 ml-2" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -87,21 +98,11 @@ export default function TransactionDataTable({
                         <DropdownMenuRadioItem value="all">
                           All
                         </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Rent">
-                          Rent
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Salary">
-                          Salary
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Groceries">
-                          Groceries
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Utilities">
-                          Utilities
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Entertainment">
-                          Entertainment
-                        </DropdownMenuRadioItem>
+                        {FetchCategories.data?.map((e) => (
+                          <DropdownMenuRadioItem key={e.id} value={e.name}>
+                            {e.name}
+                          </DropdownMenuRadioItem>
+                        ))}
                       </DropdownMenuRadioGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -112,7 +113,8 @@ export default function TransactionDataTable({
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm">
-                        Type
+                        {selectedType[0].toUpperCase()}
+                        {selectedType.slice(1)}
                         <ChevronDownIcon className="h-4 w-4 ml-2" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -138,7 +140,8 @@ export default function TransactionDataTable({
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm">
-                        Amount
+                        {selectedAmount[0].toUpperCase()}
+                        {selectedAmount.slice(1)}
                         <ChevronDownIcon className="h-4 w-4 ml-2" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -177,8 +180,19 @@ export default function TransactionDataTable({
                   <TableCell className="text-center">
                     {formatDate(transaction.date)}
                   </TableCell>
-                  <TableCell className="text-center">
-                    {transaction.type}
+                  <TableCell
+                    className={`text-center w-fit px-3 py-1 rounded-sm h-fit `}
+                  >
+                    <div
+                      className={`text-center w-fit px-3 py-1 mx-auto rounded-sm h-fit  ${
+                        transaction.type === "income"
+                          ? "bg-green-700 bg-opacity-25 text-green-500"
+                          : "bg-red-700 bg-opacity-25 text-red-500"
+                      } `}
+                    >
+                      {transaction.type[0].toUpperCase()}
+                      {transaction.type.slice(1)}
+                    </div>
                   </TableCell>
                   <TableCell className="text-center">
                     {transaction.type === "Expense"

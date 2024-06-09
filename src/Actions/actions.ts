@@ -119,6 +119,8 @@ export const saveCategoryIncome = async ({
       },
     });
 
+    console.log(category);
+
     return { success: "ok" };
   } catch (err) {
     console.error("Error creating category:", err);
@@ -141,6 +143,22 @@ export const getIncomeCategories = async () => {
     const categories = await prisma.category.findMany();
     const filtered = categories.filter((e) => e.type === "income");
     return filtered;
+  } catch (err) {
+    throw new Error("Unable To fectch categories");
+  }
+};
+
+export const getAllCategories = async () => {
+  try {
+    const categories = await prisma.category.findMany({
+      select: {
+        icon: true,
+        name: true,
+        id: true,
+      },
+    });
+    console.log(categories);
+    return categories;
   } catch (err) {
     throw new Error("Unable To fectch categories");
   }
