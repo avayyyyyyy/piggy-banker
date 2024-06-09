@@ -1,8 +1,3 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/dVDzFJA8pW9
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 "use client";
 
 import { useState } from "react";
@@ -26,18 +21,20 @@ import { useQuery } from "@tanstack/react-query";
 import { getTransaction } from "@/actions/actions";
 import { Transaction } from "@prisma/client";
 
-export default function TransactionDataTable() {
+export default function TransactionDataTable({
+  currenctCurrencySymbol,
+}: {
+  currenctCurrencySymbol: string;
+}) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedAmount, setSelectedAmount] = useState("all");
 
-  const { data: transactionData, isFetched } = useQuery({
-    queryKey: ["Fetch TransactionData"],
+  const { data: transactionData } = useQuery({
+    queryKey: ["Fetch table"],
     queryFn: async () => await getTransaction(),
     refetchOnMount: "always",
   });
-
-  console.log(transactionData);
 
   const filteredTransactionData =
     selectedCategory === "all"
@@ -185,8 +182,12 @@ export default function TransactionDataTable() {
                   </TableCell>
                   <TableCell className="text-center">
                     {transaction.type === "Expense"
-                      ? `-$${Math.abs(transaction.amount).toFixed(2)}`
-                      : `$${transaction.amount.toFixed(2)}`}
+                      ? `-${currenctCurrencySymbol}${Math.abs(
+                          transaction.amount
+                        ).toFixed(2)}`
+                      : `${currenctCurrencySymbol}${transaction.amount.toFixed(
+                          2
+                        )}`}
                   </TableCell>
 
                   <TableCell className="text-center">

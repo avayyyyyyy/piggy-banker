@@ -10,8 +10,25 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import TransactionsTable from "@/components/transaction table";
+import { auth } from "@/auth";
+import { Currencies } from "@/lib/currencies";
+import prisma from "@/lib/db";
 
-function page() {
+async function page() {
+  const session = await auth();
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email!,
+    },
+  });
+
+  const currentCurrecy = Currencies.find((e) => {
+    return e.value == user?.currency;
+  });
+
+  console.log(currentCurrecy?.symbol);
+
   return (
     <div>
       <div className="md:w-[80vw] w-[90vw]   mx-auto">
@@ -39,7 +56,7 @@ function page() {
           </div>
         </div>
       </div>
-      <TransactionsTable />
+      <TransactionsTable currenctCurrencySymbol={currentCurrecy?.symbol!} />
     </div>
   );
 }
