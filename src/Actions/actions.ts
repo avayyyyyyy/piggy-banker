@@ -256,7 +256,13 @@ export const getTransaction = async () => {
     where: {
       userId: user?.id,
     },
+    orderBy: [
+      {
+        createdAt: "desc",
+      },
+    ],
   });
+
   return transactions;
 };
 
