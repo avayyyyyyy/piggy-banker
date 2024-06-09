@@ -2,12 +2,9 @@ import React from "react";
 import Logo from "./Logo";
 import { ModeToggle } from "./ui/ToggleTheme";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { LoginPopup } from "./login-popup";
 import { auth } from "@/auth";
-import { useSession } from "next-auth/react";
-import UserAvatar from "./UserAvatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +14,7 @@ import {
 } from "./ui/dropdown-menu";
 import { logout } from "@/actions/actions";
 import { Button } from "./ui/button";
-import { LayoutDashboard, UsersRound, Wallet } from "lucide-react";
+import { LayoutDashboard, Menu, UsersRound, Wallet } from "lucide-react";
 import NavLinks from "./NavLinks";
 
 async function Navbar() {
@@ -36,12 +33,16 @@ async function Navbar() {
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Avatar className="cursor-pointer">
-                  <AvatarImage src={session.user?.image!} />
-                  <AvatarFallback>
-                    {session.user?.name?.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
+                <div className="flex items-center gap-2 py-2 px-3  border rounded-full">
+                  <Avatar className="cursor-pointer h-8 w-8">
+                    <AvatarImage src={session.user?.image!} />
+
+                    <AvatarFallback>
+                      {session.user?.name?.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <Menu />
+                </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>

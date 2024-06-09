@@ -25,14 +25,6 @@ export function LoginPopup() {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          {/* <Button
-            onClick={() => signInGithub()}
-            className="w-full"
-            variant="outline"
-          >
-            <GithubIcon className="mr-2 h-5 w-5" />
-            Sign in with GitHub
-          </Button> */}
           <Button
             onClick={() => signInGoogle()}
             className="w-full"
