@@ -27,7 +27,7 @@ async function page() {
     return e.value == user?.currency;
   });
 
-  console.log(currentCurrecy?.symbol);
+
 
   return (
     <div>

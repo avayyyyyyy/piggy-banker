@@ -74,7 +74,6 @@ export const saveCategoryExpense = async ({
       },
     });
 
-    console.log(category);
 
     return { success: "ok" };
   } catch (err) {
@@ -89,8 +88,6 @@ export const saveCategoryIncome = async ({
 }: SaveCategoryParams) => {
   try {
     const session = await auth();
-
-    console.log(title, icon);
 
     if (!title || !icon) {
       throw new Error("Input Fields are required!");
@@ -118,8 +115,6 @@ export const saveCategoryIncome = async ({
         type: "income",
       },
     });
-
-    console.log(category);
 
     return { success: "ok" };
   } catch (err) {
@@ -157,7 +152,6 @@ export const getAllCategories = async () => {
         id: true,
       },
     });
-    console.log(categories);
     return categories;
   } catch (err) {
     throw new Error("Unable To fectch categories");
@@ -176,7 +170,6 @@ export const saveIncome = async (body: {
     if (!body.category || !body.date || !body.desc || !body.price) {
       throw new Error("Please enter valid inputs");
     }
-    console.log(body.category);
 
     const catIcon = body.category.split(" ")[0];
     const cat = body.category.split(" ")[2];
@@ -205,8 +198,6 @@ export const saveIncome = async (body: {
         userId: user.id,
       },
     });
-
-    console.log(income);
 
     return { status: "ok" };
   } catch (err) {

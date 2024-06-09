@@ -56,8 +56,6 @@ export default function TransactionDataTable({
           (transaction: Transaction) => transaction.type === selectedType
         );
 
-  console.log(filteredByType);
-
   let filteredByAmount = filteredByType;
   if (selectedAmount === "aes") {
     filteredByAmount = filteredByType

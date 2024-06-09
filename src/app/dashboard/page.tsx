@@ -79,8 +79,6 @@ async function Page() {
     .reduce((acc, e) => acc + e.amount, 0);
   const wallet = totalIncome - totalExpense;
 
-  console.log(totalIncome);
-
   return (
     <div>
       <IntroHeader />
