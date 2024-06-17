@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-fit mx-auto flex-col items-center justify-between z-10">
+      <main className="flex min-h-[80vh] m-auto flex-col items-center justify-between z-10">
         <div className="flex flex-col my-10  items-center ">
           <AnimatedGradientText>
             🚀 <hr className="mx-2 h-4 w-[1px] shrink-0 bg-gray-400" />{" "}
@@ -31,17 +31,19 @@ export default async function Home() {
             </span>
             <ChevronRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
           </AnimatedGradientText>
-          <div className="text-7xl shadow-lg  text-center font-bold bg-gradient-to-br from-white to-white/30 bg-clip-text text-transparent  max-w-[80vw] mt-10">
+          <div className="md:text-7xl text-3xl shadow-lg  text-center font-bold bg-gradient-to-br from-white to-white/30 bg-clip-text text-transparent  max-w-[80vw] mt-10">
             Master your money.
             <br /> Track and grow effortlessly.
           </div>
           <form action={signInGoogle}>
             <Button
               type="submit"
-              className="rounded-full mt-4"
+              className="rounded-full mt-4 md:mt-8"
               variant={"secondary"}
             >
-              Create Your First Transaction Now!
+              <span className="text-xs md:text-lg">
+                Create Your First Transaction Now!
+              </span>
               <ArrowRight size={18} className="ml-2" />
             </Button>
           </form>

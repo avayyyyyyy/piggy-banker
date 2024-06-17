@@ -102,6 +102,7 @@ async function Navbar() {
               <Link
                 href={"https://github.com/avayyyyyyy/piggy-banker"}
                 target="_blank"
+                className="hidden  md:flex"
               >
                 Star on Github
                 <Github size={18} className="ml-2" />
