@@ -7,7 +7,7 @@ import OverviewBoxes from "@/components/OverviewBoxes";
 import prisma from "@/lib/db";
 import { Currencies } from "@/lib/currencies";
 import { Progress } from "@/components/ui/progress";
-
+import BarChart from "@/components/Charts";
 interface Transaction {
   id: string;
   createdAt: Date;
@@ -85,7 +85,7 @@ async function Page() {
       <div>
         <div className="flex justify-between items-center mt-3">
           <div className="text-2xl font-bold">Overview</div>
-          <DropDown />
+          {/* <DropDown /> */}
         </div>
         <div className="flex md:flex-row flex-col justify-between mt-4 gap-3">
           <OverviewBoxes
@@ -166,6 +166,18 @@ async function Page() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+        <div>
+          <div className="text-3xl my-5  font-bold">History</div>
+          <div>
+            {transactions && transactions.length > 0 ? (
+              <BarChart topExpenses={topExpenses} topIncome={topIncome} />
+            ) : (
+              <div className="text-sm text-primary/40 text-center">
+                Create a transaction to view graph
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ export default async function Home() {
   const userSession = await auth();
 
   if (userSession?.user?.email) {
-    return redirect("/currency");
+    return redirect("/dashboard");
   }
 
   return (

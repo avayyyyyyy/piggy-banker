@@ -27,11 +27,9 @@ async function page() {
     return e.value == user?.currency;
   });
 
-
-
   return (
     <div>
-      <div className="md:w-[80vw] w-[90vw]   mx-auto">
+      <div className="md:max-w-[90vw] w-[90vw]   mx-auto">
         <div className="flex md:flex-row flex-wrap flex-row space-y-3 pb-7 md:space-y-0 items-center justify-between border-b border-primary/10 ">
           <div className="md:text-3xl text-xl font-bold">
             Transactions history ⏰

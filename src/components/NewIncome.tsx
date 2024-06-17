@@ -141,7 +141,7 @@ function NewIncome() {
                 name="description"
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-[90%] md:w-full"
-                placeholder="House Rent"
+                placeholder="Salary"
               />
               <p className="text-sm text-primary/50">
                 Transaction description (required)
@@ -187,9 +187,24 @@ function NewIncome() {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="💡 Electronics">
-                              💡 Electronics
+                            <SelectItem value="💼 Salary">💼 Salary</SelectItem>
+
+                            <SelectItem value="🏠 Rental Income">
+                              🏠 Rental Income
                             </SelectItem>
+
+                            <SelectItem value="📈 Investment Earnings">
+                              📈 Investment Earnings
+                            </SelectItem>
+
+                            <SelectItem value="📚 Royalties">
+                              📚 Royalties
+                            </SelectItem>
+
+                            <SelectItem value="🧾 Dividends">
+                              🧾 Dividends
+                            </SelectItem>
+
                             {FetchCategories.data?.map((e) => (
                               <SelectItem
                                 key={e.id}

@@ -14,7 +14,13 @@ import {
 } from "./ui/dropdown-menu";
 import { logout } from "@/actions/actions";
 import { Button } from "./ui/button";
-import { LayoutDashboard, Menu, UsersRound, Wallet } from "lucide-react";
+import {
+  Github,
+  LayoutDashboard,
+  Menu,
+  UsersRound,
+  Wallet,
+} from "lucide-react";
 import NavLinks from "./NavLinks";
 
 async function Navbar() {
@@ -33,7 +39,7 @@ async function Navbar() {
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <div className="flex items-center gap-2 py-2 px-3  border rounded-full">
+                <div className="flex items-center gap-2 py-2 px-3 cursor-pointer  border rounded-full">
                   <Avatar className="cursor-pointer h-8 w-8">
                     <AvatarImage src={session.user?.image!} />
 
@@ -90,7 +96,12 @@ async function Navbar() {
             </DropdownMenu>
           </div>
         ) : (
-          <LoginPopup />
+          <>
+            <LoginPopup />
+            <Button size={"sm"} variant={"secondary"}>
+              Star on <Github size={18} className="ml-2" />
+            </Button>
+          </>
         )}
       </div>
     </div>

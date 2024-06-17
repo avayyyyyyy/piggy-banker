@@ -74,7 +74,6 @@ export const saveCategoryExpense = async ({
       },
     });
 
-
     return { success: "ok" };
   } catch (err) {
     console.error("Error creating category:", err);
@@ -172,7 +171,10 @@ export const saveIncome = async (body: {
     }
 
     const catIcon = body.category.split(" ")[0];
-    const cat = body.category.split(" ")[2];
+    const cat = body.category.split(" ")[1] || body.category.split(" ")[2];
+
+    console.log(cat);
+    console.log(catIcon);
 
     if (!session?.user?.email) {
       throw new Error("User is not authenticated");
@@ -213,13 +215,14 @@ export const saveExpense = async (body: {
 }) => {
   try {
     const session = await auth();
+    console.log(body);
 
     if (!body.category || !body.date || !body.desc || !body.price) {
       throw new Error("Please enter valid inputs");
     }
 
     const catIcon = body.category.split(" ")[0];
-    const cat = body.category.split(" ")[2];
+    const cat = body.category.split(" ")[1] || body.category.split(" ")[2];
 
     if (!session?.user?.email) {
       throw new Error("User is not authenticated");
@@ -279,4 +282,31 @@ export const getUserDetails = async () => {
   const session = await auth();
 
   return session;
+};
+
+export const deleteCategory = async (id: string) => {
+  try {
+    const deleted = await prisma.category.delete({
+      where: {
+        id,
+      },
+    });
+    return deleted;
+  } catch (err) {
+    throw new Error("Unable to delete category!");
+  }
+};
+
+export const deleteTransaction = async (id: string) => {
+  try {
+    const trans = await prisma.transaction.delete({
+      where: {
+        id,
+      },
+    });
+
+    return trans;
+  } catch (err) {
+    throw new Error("Unable to delete.");
+  }
 };

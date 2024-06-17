@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import { Toaster } from "@/components/ui/sonner";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default async function RootLayout({
           </ThemeProvider>
         </SessionProvider>
         <Toaster richColors position="bottom-right" />
+        <Footer />
       </body>
     </html>
   );
