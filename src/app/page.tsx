@@ -1,7 +1,6 @@
 import { signInGoogle } from "@/actions/actions";
 import { auth } from "@/auth";
 import AnimatedGradientText from "@/components/Custom/animated-gradient-text";
-import Meteors from "@/components/Custom/meteors";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -51,7 +50,7 @@ export default async function Home() {
             </Button>
           </form>
           <Image
-            src="https://utfs.io/f/3bf0b434-2999-421b-9f23-c1c718efc65e-6nbomz.png"
+            src="https://utfs.io/f/ce3e191f-9751-413b-9ae3-f8744771a3aa-6nbomz.webp"
             alt="Hero Image"
             className="mx-auto z-30 p-4 rounded-lg"
             width={800}
