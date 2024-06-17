@@ -46,7 +46,7 @@ export default async function Home() {
             </Button>
           </form>
           <Image
-            src="https://utfs.io/f/ce3e191f-9751-413b-9ae3-f8744771a3aa-6nbomz.webp"
+            src="https://utfs.io/f/aff53f48-4837-46e2-9b10-7afdeb746b8c-ler19.webp"
             alt="Hero Image"
             className="mx-auto z-30 p-4 rounded-lg"
             width={800}
