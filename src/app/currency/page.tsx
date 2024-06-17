@@ -24,7 +24,7 @@ async function page() {
         <div className="container  mx-auto">
           <h1 className="text-2xl font-bold mb-2">
             Welcome,
-            <span className="bg-gradient-to-br from-red-200 to-red-700 bg-clip-text md:text-3xl text-xl font-light leading-tight tracking-tighter text-transparent">
+            <span className="bg-gradient-to-br from-purple-400 via-orange-500  to-yellow-400 bg-clip-text  md:text-3xl text-xl font-light leading-tight tracking-tighter text-transparent">
               {" "}
               {session?.user?.name?.split(" ")[0]}
             </span>{" "}

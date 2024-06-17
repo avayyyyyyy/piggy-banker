@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import Image from "next/image";
-
 import { redirect } from "next/navigation";
 
 export default async function Home() {
