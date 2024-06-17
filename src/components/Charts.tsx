@@ -73,7 +73,7 @@ const BarChart: React.FC<BarChartProps> = ({ topIncome, topExpenses }) => {
   };
 
   return (
-    <div className="w-full h-96 mb-20">
+    <div className="w-full h-fit mb-20">
       <h2>Income and Expense Overview</h2>
       <Bar data={data} />
     </div>

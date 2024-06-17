@@ -168,9 +168,9 @@ async function Page() {
             </div>
           </div>
         </div>
-        <div>
+        <div className="w-full h-fit py-4">
           <div className="text-3xl my-5  font-bold">History</div>
-          <div>
+          <div className="w-full">
             {transactions && transactions.length > 0 ? (
               <BarChart topExpenses={topExpenses} topIncome={topIncome} />
             ) : (
