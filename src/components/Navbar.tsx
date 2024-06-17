@@ -34,7 +34,7 @@ async function Navbar() {
         <NavLinks />
       </div>
       <div className="flex items-center gap-x-3">
-        <ModeToggle />
+        {/* <ModeToggle /> */}
         {session?.user?.email ? (
           <div>
             <DropdownMenu>
@@ -99,7 +99,8 @@ async function Navbar() {
           <>
             <LoginPopup />
             <Button size={"sm"} variant={"secondary"}>
-              Star on <Github size={18} className="ml-2" />
+              Star on Github
+              <Github size={18} className="ml-2" />
             </Button>
           </>
         )}

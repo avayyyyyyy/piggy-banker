@@ -270,7 +270,7 @@ export const getTransaction = async () => {
     },
     orderBy: [
       {
-        createdAt: "desc",
+        date: "desc",
       },
     ],
   });

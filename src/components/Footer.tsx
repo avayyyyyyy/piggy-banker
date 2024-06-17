@@ -4,8 +4,8 @@ import Logo from "./Logo";
 const Footer = () => {
   return (
     <div>
-      <footer className="">
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
+      <footer className="border-white/20 w-[80vw] mx-auto  border-t">
+        <div className="mx-auto px-3   py-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="flex justify-center text-teal-600 sm:justify-start">
               <Logo />
