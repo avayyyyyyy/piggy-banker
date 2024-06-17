@@ -1,4 +1,4 @@
-import { signInGoogle } from "@/actions/actions";
+import { signInGoogle } from "../actions/actions";
 import { auth } from "@/auth";
 import AnimatedGradientText from "@/components/Custom/animated-gradient-text";
 import Navbar from "@/components/Navbar";

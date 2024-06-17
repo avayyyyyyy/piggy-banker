@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { logout } from "@/actions/actions";
+import { logout } from "../actions/actions";
 import { Button } from "./ui/button";
 import {
   Github,

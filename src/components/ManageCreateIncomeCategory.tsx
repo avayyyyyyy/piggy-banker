@@ -21,8 +21,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { FormEvent } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getIncomeCategories, saveCategoryIncome } from "@/actions/actions";
+import { useMutation } from "@tanstack/react-query";
+import { saveCategoryIncome } from "../actions/actions";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";

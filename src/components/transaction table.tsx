@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCategories, getTransaction } from "@/actions/actions";
+import { getAllCategories, getTransaction } from "../actions/actions";
 import { Transaction } from "@prisma/client";
 import DeleteTransactionEntry from "./DeleteTransactionEntry";
 

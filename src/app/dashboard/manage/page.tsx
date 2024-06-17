@@ -1,11 +1,9 @@
-import { getExpenseCategories } from "@/actions/actions";
 import { auth } from "@/auth";
 import ManageCurrency from "@/components/ManageCurrency";
-import { Button } from "@/components/ui/button";
 import { Currencies } from "@/lib/currencies";
 import prisma from "@/lib/db";
 import "./style.css";
-import { PlusSquare, TrendingDown, TrendingUp } from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import React from "react";
 import DeleteCategory from "@/components/DeleteCategory";
 import NewExpenseManage from "@/components/ManageCreateIncomeCategory";
