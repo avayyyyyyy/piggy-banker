@@ -35,7 +35,7 @@ async function page() {
             Transactions history ⏰
           </div>
           <div className="flex space-x-2 items-center">
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant={"outline"}>
                   <span className="font-semibold">Open</span>{" "}
@@ -50,7 +50,7 @@ async function page() {
                 <DropdownMenuItem>Team</DropdownMenuItem>
                 <DropdownMenuItem>Subscription</DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
           </div>
         </div>
       </div>

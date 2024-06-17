@@ -58,6 +58,7 @@ function NewExpense() {
   });
   const [selectedCategory, setSelectedCategory] = useState("Select Category");
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [dateOpen, setDateOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
@@ -238,9 +239,13 @@ function NewExpense() {
                 </p>
               </div>
               <div className="w-[50%] h-full">
-                <Popover>
+                <Popover open={dateOpen}>
                   <p className="text-sm mb-2">Select Date:</p>
-                  <PopoverTrigger asChild className="w-full">
+                  <PopoverTrigger
+                    onClick={() => setDateOpen(true)}
+                    asChild
+                    className="w-full"
+                  >
                     <Button
                       variant={"outline"}
                       className={cn(
@@ -255,7 +260,10 @@ function NewExpense() {
                   <PopoverContent className="p-0">
                     <Calendar
                       mode="single"
-                      onSelect={(e) => setDate(e)}
+                      onSelect={(e) => {
+                        setDate(e);
+                        setDateOpen(false);
+                      }}
                       initialFocus
                     />
                   </PopoverContent>
