@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { saveCurrency } from "../../../actions/actions";
+import { saveCurrency } from "../../../lib/actions";
 import { toast } from "sonner";
 import { Currencies } from "@/lib/currencies";
 import { useMutation } from "@tanstack/react-query";

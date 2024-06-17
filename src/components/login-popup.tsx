@@ -1,5 +1,5 @@
 "use client";
-import { signInGoogle } from "../actions/actions";
+import { signInGoogle } from "../lib/actions";
 import { Button } from "@/components/ui/button";
 import {
   DialogTrigger,

@@ -14,7 +14,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
-import { deleteCategory } from "../actions/actions";
+import { deleteCategory } from "../lib/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

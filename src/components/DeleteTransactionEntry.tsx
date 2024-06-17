@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
-import { deleteTransaction } from "../actions/actions";
+import { deleteTransaction } from "../lib/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

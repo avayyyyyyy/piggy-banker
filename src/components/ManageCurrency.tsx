@@ -9,7 +9,7 @@ import {
 import { Button } from "./ui/button";
 import { Currencies } from "@/lib/currencies";
 import { useMutation } from "@tanstack/react-query";
-import { saveCurrency } from "../actions/actions";
+import { saveCurrency } from "../lib/actions";
 import { toast } from "sonner";
 
 function ManageCurrency({

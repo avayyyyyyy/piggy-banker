@@ -44,7 +44,7 @@ import {
   getExpenseCategories,
   saveCategoryExpense,
   saveExpense,
-} from "../actions/actions";
+} from "../lib/actions";
 import { toast } from "sonner";
 import { ChevronDownIcon, Loader, PlusIcon } from "lucide-react";
 

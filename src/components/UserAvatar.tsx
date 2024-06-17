@@ -11,7 +11,7 @@ import {
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { LayoutDashboard, UsersRound, Wallet } from "lucide-react";
-import { logout } from "../actions/actions";
+import { logout } from "../lib/actions";
 
 function UserAvatar({
   data,

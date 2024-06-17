@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { logout } from "../actions/actions";
+import { logout } from "../lib/actions";
 import { Button } from "./ui/button";
 import {
   Github,
@@ -98,9 +98,14 @@ async function Navbar() {
         ) : (
           <>
             <LoginPopup />
-            <Button size={"sm"} variant={"secondary"}>
-              Star on Github
-              <Github size={18} className="ml-2" />
+            <Button asChild size={"sm"} variant={"secondary"}>
+              <Link
+                href={"https://github.com/avayyyyyyy/piggy-banker"}
+                target="_blank"
+              >
+                Star on Github
+                <Github size={18} className="ml-2" />
+              </Link>
             </Button>
           </>
         )}
