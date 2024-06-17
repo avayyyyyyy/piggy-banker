@@ -35,9 +35,6 @@ export default async function Home() {
             Master your money.
             <br /> Track and grow effortlessly.
           </div>
-          <p className="text-white/60 mt-4 font-semibold">
-            Finance made simple.
-          </p>
           <form action={signInGoogle}>
             <Button
               type="submit"
