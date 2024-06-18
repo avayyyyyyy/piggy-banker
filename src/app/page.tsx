@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -20,8 +21,19 @@ export default async function Home() {
       <Navbar />
       <main className="flex min-h-[80vh] m-auto flex-col items-center justify-between z-10">
         <div className="flex flex-col my-10  items-center ">
+          <Link
+            className="mb-6"
+            href={"https://peerlist.io/avayyyyyyy/project/piggy-banker"}
+          >
+            <Image
+              src={"https://peerlist.io/images/Launch_Badge_Dark.svg"}
+              width={150}
+              height={150}
+              alt="peerlist"
+            />
+          </Link>
           <AnimatedGradientText>
-            🚀 <hr className="mx-2 h-4 w-[1px] shrink-0 bg-gray-400" />{" "}
+            🚀 <hr className="mx-2  h-4 w-[1px] shrink-0 bg-gray-400" />{" "}
             <span
               className={cn(
                 `inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`

@@ -6,6 +6,10 @@ const nextConfig = {
         hostname: "utfs.io",
         protocol: "https",
       },
+      {
+        hostname: "peerlist.io",
+        protocol: "https",
+      },
     ],
   },
 };
