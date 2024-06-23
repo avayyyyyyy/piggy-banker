@@ -59,13 +59,18 @@ export default async function Home() {
               <ArrowRight size={18} className="ml-2" />
             </Button>
           </form>
-          <Image
-            src="https://utfs.io/f/aff53f48-4837-46e2-9b10-7afdeb746b8c-ler19.webp"
-            alt="Hero Image"
-            className="mx-auto z-30 p-4 rounded-lg"
-            width={800}
-            height={800}
-          />
+          <div className="relative flex max-w-6xl justify-center overflow-hidden">
+            <Image
+              src="https://utfs.io/f/aff53f48-4837-46e2-9b10-7afdeb746b8c-ler19.webp"
+              alt="hero-section"
+              width={800}
+              height={800}
+              className="h-full w-full rounded-lg object-cover md:w-[1300px]"
+              style={{
+                maskImage: `linear-gradient(to top, transparent, black 20%)`,
+              }}
+            />
+          </div>
         </div>
       </main>
     </>
