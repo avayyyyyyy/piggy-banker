@@ -67,7 +67,7 @@ export default async function Home() {
               height={800}
               className="h-full w-full rounded-lg object-cover md:w-[1300px]"
               style={{
-                maskImage: `linear-gradient(to top, transparent, black 20%)`,
+                maskImage: `linear-gradient(to top, transparent, black 90%)`,
               }}
             />
           </div>
