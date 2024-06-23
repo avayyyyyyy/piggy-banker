@@ -59,7 +59,7 @@ export default async function Home() {
               <ArrowRight size={18} className="ml-2" />
             </Button>
           </form>
-          <div className="relative flex max-w-6xl justify-center overflow-hidden">
+          <div className="relative mt-6 md:mt-0  flex md:max-w-6xl max-w-[80%] justify-center overflow-hidden">
             <Image
               src="https://utfs.io/f/aff53f48-4837-46e2-9b10-7afdeb746b8c-ler19.webp"
               alt="hero-section"
