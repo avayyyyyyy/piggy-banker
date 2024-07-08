@@ -23,7 +23,7 @@ const DeleteTransactionEntry = ({ id }: { id: string }) => {
     <div>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline">Manage</Button>
+          <Button variant="outline">Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
