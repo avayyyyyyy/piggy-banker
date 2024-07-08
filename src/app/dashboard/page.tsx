@@ -8,6 +8,8 @@ import prisma from "@/lib/db";
 import { Currencies } from "@/lib/currencies";
 import { Progress } from "@/components/ui/progress";
 import BarChart from "@/components/Charts";
+import NewGraph from "@/components/new-graph";
+
 interface Transaction {
   id: string;
   createdAt: Date;
@@ -78,6 +80,8 @@ async function Page() {
     .filter((trans) => trans.type === "expense")
     .reduce((acc, e) => acc + e.amount, 0);
   const wallet = totalIncome - totalExpense;
+
+  // console.log(transactions);
 
   return (
     <div>
@@ -172,7 +176,10 @@ async function Page() {
           <div className="text-3xl my-5  font-bold">History</div>
           <div className="w-full">
             {transactions && transactions.length > 0 ? (
-              <BarChart topExpenses={topExpenses} topIncome={topIncome} />
+              <>
+                {/* <BarChart /> */}
+                <NewGraph transactions={transactions} />
+              </>
             ) : (
               <div className="text-sm text-primary/40 text-center">
                 Create a transaction to view graph

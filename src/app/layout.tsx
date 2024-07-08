@@ -26,7 +26,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </ThemeProvider>
 
         <Toaster richColors position="bottom-right" />
