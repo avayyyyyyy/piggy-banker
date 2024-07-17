@@ -22,7 +22,11 @@ async function Page() {
     return e.value == user?.currency;
   });
 
-  const Categories = await prisma.category.findMany();
+  const Categories = await prisma.category.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
   const incomeCate = Categories.filter((e) => e.type === "income");
   const expenseCate = Categories.filter((e) => e.type === "expense");
 
