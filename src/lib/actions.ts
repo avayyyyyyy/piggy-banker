@@ -74,7 +74,7 @@ export const saveCategoryExpense = async ({
       },
     });
 
-    return { success: "ok" };
+    return { success: "ok", category };
   } catch (err) {
     console.error("Error creating category:", err);
     throw new Error("Unable to create category.");
@@ -115,7 +115,7 @@ export const saveCategoryIncome = async ({
       },
     });
 
-    return { success: "ok" };
+    return { success: "ok", category };
   } catch (err) {
     console.error("Error creating category:", err);
     throw new Error("Unable to create category.");

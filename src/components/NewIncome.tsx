@@ -65,16 +65,17 @@ function NewIncome() {
   const { mutate: saveCategoryFnc, isPending: categoryLoading } = useMutation({
     mutationKey: ["SaveCategory"],
     mutationFn: async () => {
-      await saveCategoryIncome(categoryInfo);
+      return await saveCategoryIncome(categoryInfo);
     },
 
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success("Category added successfully! 🎉");
       setCategoryOpen(false);
       setCategoryInfo({
         title: "",
         icon: "",
       });
+      setSelectedCategory(`${data.category.icon} ${data.category.name}`);
       FetchCategories.refetch();
     },
 

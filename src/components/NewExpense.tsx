@@ -65,16 +65,17 @@ function NewExpense() {
   const { mutate: saveCategoryFnc, isPending: categoryLoading } = useMutation({
     mutationKey: ["saveCategoryExpense"],
     mutationFn: async () => {
-      await saveCategoryExpense(categoryInfo);
+      return await saveCategoryExpense(categoryInfo);
     },
 
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success("Category added successfully! 🎉");
       setCategoryOpen(false);
       setCategoryInfo({
         title: "",
         icon: "",
       });
+      setSelectedCategory(`${data.category.icon} ${data.category.name}`);
       FetchCategories.refetch();
     },
 
