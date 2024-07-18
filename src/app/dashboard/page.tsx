@@ -90,7 +90,7 @@ async function Page() {
     .reduce((acc, e) => acc + e.amount, 0);
   const wallet = totalIncome - totalExpense;
 
-  // // console.log(transactions);
+  // console.log(transactions);
 
   return (
     <div>
@@ -100,7 +100,10 @@ async function Page() {
           <div className="w-full">
             <div className="text-2xl font-bold">Overview</div>
             <div className="p-3 my-4 w-full rounded-lg border-primary/20 border ">
-              {summaryToShow[0].summary}
+              <div className="font-semibold text-xl border-b-2 border-primary/10 pb-2">
+                What AI Experts thinks about your Finances 🏦 ...
+              </div>
+              <div className="pt-2">{summaryToShow[0].summary}</div>
             </div>
           </div>
           {/* <DropDown /> */}

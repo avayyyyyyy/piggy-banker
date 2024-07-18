@@ -66,7 +66,7 @@ function NewExpenseManage() {
     <div>
       <Dialog open={categoryOpen} onOpenChange={setCategoryOpen}>
         <DialogTrigger asChild>
-          <Button size={"sm"} className="flex gap-2 text-sm  items-center">
+          <Button size={"sm"} className="flex gap-2 text-xs items-center">
             <PlusSquare />
             Create Category
           </Button>
