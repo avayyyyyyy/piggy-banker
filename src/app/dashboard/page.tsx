@@ -101,7 +101,7 @@ async function Page() {
             <div className="text-2xl font-bold">Overview</div>
             <div className="p-3 my-4 w-full rounded-lg border-primary/20 border ">
               <div className="font-semibold text-xl border-b-2 border-primary/10 pb-2">
-                What AI Experts thinks about your Finances 🏦 ...
+                What our AI Experts thinks about your Finances 🏦 ...
               </div>
               <div className="pt-2">{summaryToShow[0].summary}</div>
             </div>
