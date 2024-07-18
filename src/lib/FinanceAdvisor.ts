@@ -36,7 +36,7 @@ const getFinancialAdvice = async () => {
     const userPrompt = `
       Based on my following user transactional data:
       ${JSON.stringify(final, null, 2)}
-      Provide detailed financial advice in 2 sentences to help the user manage their finances and spendings more effectively like where to spend more or where the user is spending more and please include some emojis related to that.
+      Provide detailed financial summary and advice in 2 sentences to help the user to get insights of their transaction and can manage their finances and spendings more effectively like where to spend more or where the user is spending more and please include some emojis related to that.
     `;
 
     // Send the prompt to the OpenAI API
