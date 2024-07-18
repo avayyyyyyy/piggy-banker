@@ -53,8 +53,6 @@ export default function BarChart({ transactions }: NewGraphProps) {
     },
   };
 
-  console.log(transactions);
-
   // Prepare the transactions data for the chart
   const chartData = transactions.map((transaction) => {
     const date = transaction.createdAt.toISOString().split("T")[0]; // Format date to YYYY-MM-DD

@@ -5,11 +5,14 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Footer from "@/components/Footer";
+import { getTransactions } from "@/lib/FinanceAdvisor";
 
 export const metadata: Metadata = {
   title: "Piggy Banker",
   description: "You personalized finance management app.",
 };
+
+getTransactions();
 
 export default async function RootLayout({
   children,

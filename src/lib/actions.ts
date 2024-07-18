@@ -1,6 +1,8 @@
 "use server";
 import { auth, signIn, signOut } from "@/auth";
 import prisma from "@/lib/db";
+import getFinancialAdvice from "./FinanceAdvisor";
+import { User } from "lucide-react";
 export const signInGithub = async () => {
   await signIn("github");
 };
@@ -17,7 +19,9 @@ export const saveCurrency = async (Usercurrency: string) => {
   try {
     const session = await auth();
 
-    if (Usercurrency === "") {
+    // console.log(Usercurrency);
+
+    if (Usercurrency == "") {
       throw new Error("Select a valid currency.");
     }
     const currency = await prisma.user.update({
@@ -28,6 +32,8 @@ export const saveCurrency = async (Usercurrency: string) => {
         currency: Usercurrency,
       },
     });
+
+    // console.log(Usercurrency);
 
     return { status: "ok" };
   } catch (err) {
@@ -157,6 +163,53 @@ export const getAllCategories = async () => {
   }
 };
 
+export async function getTransactionsSummary() {
+  try {
+    var trans = await getTransaction();
+    const session = await auth();
+
+    // console.log(trans);
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: session?.user?.email!,
+      },
+    });
+
+    if (trans.length <= 6) {
+      await prisma.user.update({
+        where: {
+          id: user?.id!,
+        },
+        data: {
+          summary: "You have less than 6 transactions to provide advice 🚀.",
+        },
+      });
+    } else {
+      var summaryToSave;
+      getFinancialAdvice()
+        .then((advice) => {
+          summaryToSave = advice;
+          return summaryToSave;
+        })
+        .then(async (summaryToSave) => {
+          // console.log(summaryToSave);
+          const saved = await prisma.user.update({
+            where: {
+              id: user?.id!,
+            },
+            data: {
+              summary: summaryToSave!,
+            },
+          });
+        });
+    }
+    return { status: "ok" };
+  } catch (error) {
+    console.error("Error fetching transactions:", error);
+  }
+}
+
 export const saveIncome = async (body: {
   desc: string;
   price: string;
@@ -173,8 +226,8 @@ export const saveIncome = async (body: {
     const catIcon = body.category.split(" ")[0];
     const cat = body.category.split(" ")[1] || body.category.split(" ")[2];
 
-    console.log(cat);
-    console.log(catIcon);
+    // console.log(cat);
+    // console.log(catIcon);
 
     if (!session?.user?.email) {
       throw new Error("User is not authenticated");
@@ -201,6 +254,8 @@ export const saveIncome = async (body: {
       },
     });
 
+    await getTransactionsSummary();
+
     return { status: "ok" };
   } catch (err) {
     throw new Error("Unable to create income, Please try again.");
@@ -215,7 +270,7 @@ export const saveExpense = async (body: {
 }) => {
   try {
     const session = await auth();
-    console.log(body);
+    // console.log(body);
 
     if (!body.category || !body.date || !body.desc || !body.price) {
       throw new Error("Please enter valid inputs");
@@ -249,6 +304,7 @@ export const saveExpense = async (body: {
         userId: user.id,
       },
     });
+    await getTransactionsSummary();
 
     return { status: "ok" };
   } catch (err) {

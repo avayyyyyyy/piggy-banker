@@ -150,7 +150,7 @@ export default function BarChart() {
     return date >= now;
   });
 
-  console.log(filteredData);
+  // // console.log(filteredData);
 
   return (
     <Card>

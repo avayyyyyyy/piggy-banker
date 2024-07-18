@@ -70,6 +70,15 @@ async function Page() {
     where: { userId: user.id },
   });
 
+  const summaryToShow = await prisma.user.findMany({
+    where: {
+      id: user.id,
+    },
+    select: {
+      summary: true,
+    },
+  });
+
   const topIncome = aggregateAndSort(transactions, "income");
   const topExpenses = aggregateAndSort(transactions, "expense");
 
@@ -81,14 +90,19 @@ async function Page() {
     .reduce((acc, e) => acc + e.amount, 0);
   const wallet = totalIncome - totalExpense;
 
-  // console.log(transactions);
+  // // console.log(transactions);
 
   return (
     <div>
       <IntroHeader />
       <div>
         <div className="flex justify-between items-center mt-3">
-          <div className="text-2xl font-bold">Overview</div>
+          <div className="w-full">
+            <div className="text-2xl font-bold">Overview</div>
+            <div className="p-3 my-4 w-full rounded-lg border-primary/20 border ">
+              {summaryToShow[0].summary}
+            </div>
+          </div>
           {/* <DropDown /> */}
         </div>
         <div className="flex md:flex-row flex-col justify-between mt-4 gap-3">
