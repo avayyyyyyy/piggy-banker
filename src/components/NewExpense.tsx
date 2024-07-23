@@ -106,7 +106,7 @@ function NewExpense() {
       });
     },
     onSuccess: () => {
-      toast.success("Income successfully saved!");
+      toast.success("Expense successfully saved!");
       setOpen(false);
       window.location.reload();
     },
