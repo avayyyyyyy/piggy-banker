@@ -28,7 +28,7 @@ async function Navbar() {
   const session = await auth();
 
   return (
-    <div className="md:max-w-[80vw] max-w-screen mb-10 mx-auto flex justify-between px-4  md:px-6 border-b border-primary/10 ">
+    <div className="md:max-w-[80vw] max-w-screen mb-10 mx-auto flex justify-between px-4  md:px-6 border-b border-primary/10">
       <div className="flex items-center md:gap-5 py-5">
         <Logo />
         <NavLinks />
