@@ -32,7 +32,7 @@ export default async function RootLayout({
           {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </ThemeProvider>
 
-        <Toaster richColors position="bottom-right" />
+        <Toaster closeButton expand richColors position="bottom-right" />
         <Footer />
       </body>
     </html>
